@@ -1,0 +1,15 @@
+C:\Users\Gerson Gutierrez\Desktop\AnimalRescue-main\Animal-Rescue-App\AnimalRescue.BLL\bin\Debug\net9.0\AnimalRescue.BLL.deps.json
+C:\Users\Gerson Gutierrez\Desktop\AnimalRescue-main\Animal-Rescue-App\AnimalRescue.BLL\bin\Debug\net9.0\AnimalRescue.BLL.dll
+C:\Users\Gerson Gutierrez\Desktop\AnimalRescue-main\Animal-Rescue-App\AnimalRescue.BLL\bin\Debug\net9.0\AnimalRescue.BLL.pdb
+C:\Users\Gerson Gutierrez\Desktop\AnimalRescue-main\Animal-Rescue-App\AnimalRescue.BLL\bin\Debug\net9.0\AnimalRescue.DAL.dll
+C:\Users\Gerson Gutierrez\Desktop\AnimalRescue-main\Animal-Rescue-App\AnimalRescue.BLL\bin\Debug\net9.0\AnimalRescue.DAL.pdb
+C:\Users\Gerson Gutierrez\Desktop\AnimalRescue-main\Animal-Rescue-App\AnimalRescue.BLL\obj\Debug\net9.0\AnimalRescue.BLL.csproj.AssemblyReference.cache
+C:\Users\Gerson Gutierrez\Desktop\AnimalRescue-main\Animal-Rescue-App\AnimalRescue.BLL\obj\Debug\net9.0\AnimalRescue.BLL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Gerson Gutierrez\Desktop\AnimalRescue-main\Animal-Rescue-App\AnimalRescue.BLL\obj\Debug\net9.0\AnimalRescue.BLL.AssemblyInfoInputs.cache
+C:\Users\Gerson Gutierrez\Desktop\AnimalRescue-main\Animal-Rescue-App\AnimalRescue.BLL\obj\Debug\net9.0\AnimalRescue.BLL.AssemblyInfo.cs
+C:\Users\Gerson Gutierrez\Desktop\AnimalRescue-main\Animal-Rescue-App\AnimalRescue.BLL\obj\Debug\net9.0\AnimalRescue.BLL.csproj.CoreCompileInputs.cache
+C:\Users\Gerson Gutierrez\Desktop\AnimalRescue-main\Animal-Rescue-App\AnimalRescue.BLL\obj\Debug\net9.0\AnimalRe.6E07959C.Up2Date
+C:\Users\Gerson Gutierrez\Desktop\AnimalRescue-main\Animal-Rescue-App\AnimalRescue.BLL\obj\Debug\net9.0\AnimalRescue.BLL.dll
+C:\Users\Gerson Gutierrez\Desktop\AnimalRescue-main\Animal-Rescue-App\AnimalRescue.BLL\obj\Debug\net9.0\refint\AnimalRescue.BLL.dll
+C:\Users\Gerson Gutierrez\Desktop\AnimalRescue-main\Animal-Rescue-App\AnimalRescue.BLL\obj\Debug\net9.0\AnimalRescue.BLL.pdb
+C:\Users\Gerson Gutierrez\Desktop\AnimalRescue-main\Animal-Rescue-App\AnimalRescue.BLL\obj\Debug\net9.0\ref\AnimalRescue.BLL.dll

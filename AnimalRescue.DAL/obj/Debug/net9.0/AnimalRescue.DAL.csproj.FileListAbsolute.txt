@@ -1,0 +1,12 @@
+C:\Users\Gerson Gutierrez\Desktop\AnimalRescue-main\Animal-Rescue-App\AnimalRescue.DAL\bin\Debug\net9.0\AnimalRescue.DAL.deps.json
+C:\Users\Gerson Gutierrez\Desktop\AnimalRescue-main\Animal-Rescue-App\AnimalRescue.DAL\bin\Debug\net9.0\AnimalRescue.DAL.dll
+C:\Users\Gerson Gutierrez\Desktop\AnimalRescue-main\Animal-Rescue-App\AnimalRescue.DAL\bin\Debug\net9.0\AnimalRescue.DAL.pdb
+C:\Users\Gerson Gutierrez\Desktop\AnimalRescue-main\Animal-Rescue-App\AnimalRescue.DAL\obj\Debug\net9.0\AnimalRescue.DAL.csproj.AssemblyReference.cache
+C:\Users\Gerson Gutierrez\Desktop\AnimalRescue-main\Animal-Rescue-App\AnimalRescue.DAL\obj\Debug\net9.0\AnimalRescue.DAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Gerson Gutierrez\Desktop\AnimalRescue-main\Animal-Rescue-App\AnimalRescue.DAL\obj\Debug\net9.0\AnimalRescue.DAL.AssemblyInfoInputs.cache
+C:\Users\Gerson Gutierrez\Desktop\AnimalRescue-main\Animal-Rescue-App\AnimalRescue.DAL\obj\Debug\net9.0\AnimalRescue.DAL.AssemblyInfo.cs
+C:\Users\Gerson Gutierrez\Desktop\AnimalRescue-main\Animal-Rescue-App\AnimalRescue.DAL\obj\Debug\net9.0\AnimalRescue.DAL.csproj.CoreCompileInputs.cache
+C:\Users\Gerson Gutierrez\Desktop\AnimalRescue-main\Animal-Rescue-App\AnimalRescue.DAL\obj\Debug\net9.0\AnimalRescue.DAL.dll
+C:\Users\Gerson Gutierrez\Desktop\AnimalRescue-main\Animal-Rescue-App\AnimalRescue.DAL\obj\Debug\net9.0\refint\AnimalRescue.DAL.dll
+C:\Users\Gerson Gutierrez\Desktop\AnimalRescue-main\Animal-Rescue-App\AnimalRescue.DAL\obj\Debug\net9.0\AnimalRescue.DAL.pdb
+C:\Users\Gerson Gutierrez\Desktop\AnimalRescue-main\Animal-Rescue-App\AnimalRescue.DAL\obj\Debug\net9.0\ref\AnimalRescue.DAL.dll
