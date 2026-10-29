@@ -1,14 +1,12 @@
-# Blueprint de Render: base PostgreSQL + API (.NET, Docker) + frontend web (Expo, sitio estático).
+# Blueprint de Render: API (.NET, Docker) + frontend web (Expo, sitio estático).
 # Render → New → Blueprint → elegir este repositorio.
+#
+# La base vive en una instancia PostgreSQL existente (Render permite una sola gratuita por workspace):
+# en ConnectionStrings__Default se pega su "Internal Database URL" y Database__Nombre elige la base
+# propia dentro de ella; la API la crea (con su esquema) al arrancar si no existe.
 #
 # Las URLs públicas salen del nombre del servicio (https://<name>.onrender.com). Si Render asigna otra
 # (porque el nombre ya existe), corrige Cors__Origins__0 y EXPO_PUBLIC_API_URL y vuelve a desplegar.
-
-databases:
-  - name: animal-rescue-db
-    plan: free
-    databaseName: animal_rescue
-    user: animal_rescue
 
 services:
   - type: web
@@ -19,9 +17,9 @@ services:
     healthCheckPath: /health
     envVars:
       - key: ConnectionStrings__Default
-        fromDatabase:
-          name: animal-rescue-db
-          property: connectionString
+        sync: false
+      - key: Database__Nombre
+        value: animal_rescue
       - key: Database__CrearEsquema
         value: "true"
       - key: Jwt__Secret

@@ -16,7 +16,7 @@ public static class DependencyInjection
             ?? throw new InvalidOperationException("Falta ConnectionStrings:Default en la configuración.");
 
         services.AddDbContext<AnimalRescueDbContext>(o => o
-            .UseNpgsql(NormalizarConexion(conexion))
+            .UseNpgsql(NormalizarConexion(conexion, config["Database:Nombre"]))
             .UseSnakeCaseNamingConvention());
 
         services.AddScoped<UnitOfWork.IUnitOfWork, UnitOfWork.UnitOfWork>();
@@ -40,20 +40,30 @@ public static class DependencyInjection
     /// <summary>
     /// Render (y otros proveedores) entregan la conexión como URL: postgresql://usuario:clave@host:puerto/base.
     /// Npgsql solo entiende el formato clave=valor, así que se convierte.
+    /// Database:Nombre reemplaza la base de la conexión (para usar una base propia en una instancia compartida).
     /// </summary>
-    private static string NormalizarConexion(string conexion)
+    private static string NormalizarConexion(string conexion, string? baseDatos)
     {
-        if (!Uri.TryCreate(conexion, UriKind.Absolute, out var url) || !url.Scheme.StartsWith("postgres"))
-            return conexion;
-
-        var credenciales = url.UserInfo.Split(':', 2);
-        return new NpgsqlConnectionStringBuilder
+        NpgsqlConnectionStringBuilder datos;
+        if (Uri.TryCreate(conexion, UriKind.Absolute, out var url) && url.Scheme.StartsWith("postgres"))
         {
-            Host = url.Host,
-            Port = url.Port > 0 ? url.Port : 5432,
-            Database = url.AbsolutePath.TrimStart('/'),
-            Username = Uri.UnescapeDataString(credenciales[0]),
-            Password = credenciales.Length > 1 ? Uri.UnescapeDataString(credenciales[1]) : null
-        }.ConnectionString;
+            var credenciales = url.UserInfo.Split(':', 2);
+            datos = new NpgsqlConnectionStringBuilder
+            {
+                Host = url.Host,
+                Port = url.Port > 0 ? url.Port : 5432,
+                Database = url.AbsolutePath.TrimStart('/'),
+                Username = Uri.UnescapeDataString(credenciales[0]),
+                Password = credenciales.Length > 1 ? Uri.UnescapeDataString(credenciales[1]) : null
+            };
+        }
+        else
+        {
+            datos = new NpgsqlConnectionStringBuilder(conexion);
+        }
+
+        if (!string.IsNullOrWhiteSpace(baseDatos))
+            datos.Database = baseDatos;
+        return datos.ConnectionString;
     }
 }
