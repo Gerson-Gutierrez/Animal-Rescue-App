@@ -20,6 +20,13 @@ public class ProcesadorImagenes(IAlmacenamientoArchivos almacenamiento)
     private const int LadoMiniatura = 480;
     private const long PixelesMaximos = 40_000_000;
 
+    // Solo se registran los formatos aceptados: los demás (TIFF, GIF, BMP…) ni se intentan decodificar.
+    private static readonly DecoderOptions Decodificacion = new()
+    {
+        Configuration = new Configuration(
+            new JpegConfigurationModule(), new PngConfigurationModule(), new WebpConfigurationModule())
+    };
+
     public async Task<ImagenGuardada> GuardarAsync(ArchivoSubido archivo, string carpeta, CancellationToken ct = default)
     {
         if (archivo.Longitud is <= 0 or > TamanoMaximoBytes)
@@ -33,7 +40,7 @@ public class ProcesadorImagenes(IAlmacenamientoArchivos almacenamiento)
         ImageInfo info;
         try
         {
-            info = await Image.IdentifyAsync(buffer, ct);
+            info = await Image.IdentifyAsync(Decodificacion, buffer, ct);
         }
         catch (Exception ex) when (ex is UnknownImageFormatException or InvalidImageContentException or NotSupportedException)
         {
@@ -47,7 +54,7 @@ public class ProcesadorImagenes(IAlmacenamientoArchivos almacenamiento)
             throw new ReglaNegocioException($"'{archivo.Nombre}' tiene una resolución demasiado grande.");
 
         buffer.Position = 0;
-        using var imagen = await Image.LoadAsync(buffer, ct);
+        using var imagen = await Image.LoadAsync(Decodificacion, buffer, ct);
         imagen.Mutate(x => x.AutoOrient());
 
         var url = await GuardarVersionAsync(imagen, LadoMaximo, carpeta, ct);

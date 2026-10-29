@@ -4,6 +4,7 @@ using AnimalRescue.DAL.External.Storage;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Npgsql;
 
 namespace AnimalRescue.DAL;
 
@@ -15,7 +16,7 @@ public static class DependencyInjection
             ?? throw new InvalidOperationException("Falta ConnectionStrings:Default en la configuración.");
 
         services.AddDbContext<AnimalRescueDbContext>(o => o
-            .UseNpgsql(conexion)
+            .UseNpgsql(NormalizarConexion(conexion))
             .UseSnakeCaseNamingConvention());
 
         services.AddScoped<UnitOfWork.IUnitOfWork, UnitOfWork.UnitOfWork>();
@@ -34,5 +35,25 @@ public static class DependencyInjection
         });
 
         return services;
+    }
+
+    /// <summary>
+    /// Render (y otros proveedores) entregan la conexión como URL: postgresql://usuario:clave@host:puerto/base.
+    /// Npgsql solo entiende el formato clave=valor, así que se convierte.
+    /// </summary>
+    private static string NormalizarConexion(string conexion)
+    {
+        if (!Uri.TryCreate(conexion, UriKind.Absolute, out var url) || !url.Scheme.StartsWith("postgres"))
+            return conexion;
+
+        var credenciales = url.UserInfo.Split(':', 2);
+        return new NpgsqlConnectionStringBuilder
+        {
+            Host = url.Host,
+            Port = url.Port > 0 ? url.Port : 5432,
+            Database = url.AbsolutePath.TrimStart('/'),
+            Username = Uri.UnescapeDataString(credenciales[0]),
+            Password = credenciales.Length > 1 ? Uri.UnescapeDataString(credenciales[1]) : null
+        }.ConnectionString;
     }
 }

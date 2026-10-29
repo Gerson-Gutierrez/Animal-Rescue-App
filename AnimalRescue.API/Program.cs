@@ -8,6 +8,7 @@ using AnimalRescue.API.Middleware;
 using AnimalRescue.BLL;
 using AnimalRescue.BLL.Interfaces;
 using AnimalRescue.BLL.Options;
+using AnimalRescue.DAL.Context;
 using FluentValidation;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.SignalR;
@@ -100,6 +101,10 @@ builder.Services.AddRateLimiter(o =>
 });
 
 var app = builder.Build();
+
+// En un servidor nuevo la base llega vacía: con Database:CrearEsquema=true se crea el esquema al arrancar.
+if (app.Configuration.GetValue<bool>("Database:CrearEsquema"))
+    await EsquemaInicial.CrearSiFaltaAsync(app.Services);
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 

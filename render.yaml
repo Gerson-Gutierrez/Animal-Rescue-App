@@ -1,0 +1,53 @@
+# Blueprint de Render: base PostgreSQL + API (.NET, Docker) + frontend web (Expo, sitio estático).
+# Render → New → Blueprint → elegir este repositorio.
+#
+# Las URLs públicas salen del nombre del servicio (https://<name>.onrender.com). Si Render asigna otra
+# (porque el nombre ya existe), corrige Cors__Origins__0 y EXPO_PUBLIC_API_URL y vuelve a desplegar.
+
+databases:
+  - name: animal-rescue-db
+    plan: free
+    databaseName: animal_rescue
+    user: animal_rescue
+
+services:
+  - type: web
+    name: animal-rescue-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    envVars:
+      - key: ConnectionStrings__Default
+        fromDatabase:
+          name: animal-rescue-db
+          property: connectionString
+      - key: Database__CrearEsquema
+        value: "true"
+      - key: Jwt__Secret
+        generateValue: true
+      - key: Cors__Origins__0
+        value: https://animal-rescue-web.onrender.com
+      # Render termina TLS en su proxy: así la API ve las peticiones como HTTPS.
+      - key: ASPNETCORE_FORWARDEDHEADERS_ENABLED
+        value: "true"
+      # Quien se registre con este correo será SUPERADMIN. Vacíalo después de crear la cuenta.
+      - key: Bootstrap__SuperAdminEmail
+        sync: false
+
+  - type: web
+    name: animal-rescue-web
+    runtime: static
+    repo: https://github.com/Gerson-Gutierrez/Animal.Rescue
+    branch: master
+    buildCommand: npm ci && npx expo export --platform web
+    staticPublishPath: ./dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: EXPO_PUBLIC_API_URL
+        value: https://animal-rescue-api.onrender.com
+      - key: NODE_VERSION
+        value: "22"
