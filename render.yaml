@@ -25,7 +25,7 @@ services:
       - key: Jwt__Secret
         generateValue: true
       - key: Cors__Origins__0
-        value: https://animal-rescue-web.onrender.com
+        value: https://animal-rescue-web-lt6n.onrender.com
       # Render termina TLS en su proxy: así la API ve las peticiones como HTTPS.
       - key: ASPNETCORE_FORWARDEDHEADERS_ENABLED
         value: "true"
@@ -46,6 +46,6 @@ services:
         destination: /index.html
     envVars:
       - key: EXPO_PUBLIC_API_URL
-        value: https://animal-rescue-api.onrender.com
+        value: https://animal-rescue-api-nfeb.onrender.com
       - key: NODE_VERSION
         value: "22"
