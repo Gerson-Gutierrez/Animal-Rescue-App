@@ -33,19 +33,90 @@ Aplicación móvil multiplataforma (**Android e iOS**) desarrollada con **React 
 ## Estructura del proyecto
 
 ```text
-src/
-├── app/                  # Rutas y pantallas (expo-router)
-│   ├── (tabs)/           # Módulos principales: Inicio, Mapa, Publicar, Mensajes, Rescue
-│   ├── publicacion/[id]/ # Detalle y edición de reportes de mascotas
-│   ├── chat/[id].tsx     # Sala de chat en tiempo real con envío de imágenes
-│   ├── mis-mascotas.tsx  # Gestión de publicaciones propias
-│   ├── cuenta.tsx        # Perfil, configuración y diagnóstico de conexión API
-│   ├── login.tsx         # Autenticación
-│   ├── registro.tsx      # Registro de usuarios
-│   └── admin/            # Moderación: reportes, publicaciones y administradores
-├── api/                  # Cliente HTTP (fetch + refresh token) y consumo de endpoints
-├── features/             # Lógica y componentes de dominio (mapa, formularios, rescue, mensajes)
-├── components/             # Sistema de componentes UI reutilizables (inputs, modales, avisos)
-├── store/auth.ts         # Estado global de autenticación y persistencia segura de tokens
-├── lib/                  # Configuración de entorno, tema visual y utilidades
-└── types/api.ts          # Interfaces y DTOs sincronizados con el backend .NET
+AnimalRescue/                           # Solución .NET (Arquitectura en 3 capas)
+├── AnimalRescue.API/                   # Capa de Presentación (REST API + SignalR)
+│   ├── Auth/                           # Contexto de usuario actual y políticas de autorización
+│   │   ├── CurrentUser.cs
+│   │   └── Policies.cs
+│   ├── Controllers/                    # Endpoints HTTP organizados por módulo
+│   │   ├── Admin/
+│   │   │   └── AdminControllers.cs
+│   │   ├── AuthController.cs
+│   │   ├── ConversacionesController.cs
+│   │   ├── PublicacionesController.cs
+│   │   └── RescueControllers.cs
+│   ├── Hubs/                           # Comunicación bidireccional en tiempo real
+│   │   └── ChatHub.cs
+│   ├── Middleware/                     # Manejo global centralizado de excepciones
+│   │   └── ExceptionHandlingMiddleware.cs
+│   ├── Models/                         # Modelos de entrada y formularios multipart
+│   │   └── Formularios.cs
+│   ├── uploads/                        # Almacenamiento local de archivos multimedia
+│   │   ├── mensajes/
+│   │   └── publicaciones/
+│   ├── appsettings.json
+│   ├── appsettings.Development.json
+│   └── Program.cs                      # Configuración de pipeline, DI, JWT y SignalR
+│
+├── AnimalRescue.BLL/                   # Capa de Lógica de Negocio
+│   ├── DTOs/                           # Objetos de transferencia de datos por dominio
+│   │   ├── Admin/AdminDtos.cs
+│   │   ├── Auth/AuthDtos.cs
+│   │   ├── Comun/ComunDtos.cs
+│   │   ├── Mensajeria/MensajeriaDtos.cs
+│   │   ├── Publicaciones/PublicacionDtos.cs
+│   │   ├── Reportes/ReportesDtos.cs
+│   │   └── Rescue/RescueDtos.cs
+│   ├── Exceptions/                     # Excepciones personalizadas de negocio
+│   │   └── Excepciones.cs
+│   ├── Interfaces/                     # Contratos de servicios
+│   │   └── IServicios.cs
+│   ├── Mapping/                        # Transformación entre entidades y DTOs
+│   │   └── PublicacionMapeo.cs
+│   ├── Options/                        # Configuración fuertemente tipada (JWT)
+│   │   └── JwtOptions.cs
+│   ├── Services/                       # Implementación de reglas de negocio
+│   │   ├── AdminService.cs
+│   │   ├── AuthService.cs
+│   │   ├── GeocodificacionService.cs
+│   │   ├── MensajeriaService.cs
+│   │   ├── ProcesadorImagenes.cs
+│   │   ├── PublicacionService.cs
+│   │   ├── ReporteService.cs
+│   │   ├── RescueServices.cs
+│   │   └── TokenService.cs
+│   ├── Validators/                     # Reglas de validación de entrada
+│   │   └── Validadores.cs
+│   └── DependencyInjection.cs          # Registro de servicios de la capa BLL
+│
+└── AnimalRescue.DAL/                   # Capa de Acceso a Datos (EF Core + SQL Server)
+    ├── Configurations/                 # Configuración Fluent API de entidades
+    │   ├── CuentaConfigurations.cs
+    │   ├── MensajeriaConfigurations.cs
+    │   ├── PublicacionConfigurations.cs
+    │   └── RescueConfigurations.cs
+    ├── Context/                        # DbContext y configuración de esquema inicial
+    │   ├── AnimalRescueDbContext.cs
+    │   └── EsquemaInicial.cs
+    ├── Entities/                       # Entidades del modelo relacional y enumeraciones
+    │   ├── Enums.cs
+    │   ├── Mensajeria.cs
+    │   ├── Moderacion.cs
+    │   ├── Publicacion.cs
+    │   ├── Rescue.cs
+    │   └── Usuario.cs
+    ├── External/                       # Integraciones con servicios externos
+    │   ├── Geocoding/
+    │   │   ├── IGeocodificador.cs
+    │   │   └── NominatimGeocodificador.cs
+    │   └── Storage/
+    ├── Repositories/                   # Implementación del patrón Repository genérico
+    │   ├── IRepository.cs
+    │   └── Repository.cs
+    ├── Scripts/                        # Scripts SQL de inicialización
+    │   └── 01_esquema.sql
+    ├── UnitOfWork/                     # Gestión transaccional coordinada
+    │   ├── IUnitOfWork.cs
+    │   └── UnitOfWork.cs
+    └── DependencyInjection.cs          # Registro de DbContext, repositorios y Unit of Work
+```[cite: 1, 2, 3]
